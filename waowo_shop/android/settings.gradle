@@ -1,3 +1,19 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+
+plugins {
+    id "dev.flutter.flutter-gradle-plugin" version "+"
+}
+
+include ':app'
+rootProject.name = 'waowo_shop'
+project(':app').projectDir = file('app')
+
 include ':app'
 rootProject.name = 'waowo_shop'
 project(':app').projectDir = file('app')
