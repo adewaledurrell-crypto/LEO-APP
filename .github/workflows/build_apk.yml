@@ -31,6 +31,18 @@ jobs:
       - name: Install dependencies
         run: cd waowo_shop && flutter pub get
 
+      - name: Diagnose v1 embedding references
+        run: |
+          set -e
+          cd waowo_shop
+          echo "Searching project for v1-embedding indicators..."
+          grep -R --line-number "io.flutter.app" . || true
+          grep -R --line-number "GeneratedPluginRegistrant" . || true
+          grep -R --line-number "io.flutter.embedding.engine" . || true
+          echo "Searching runner pub cache for v1 indicators (may be large)..."
+          grep -R --line-number "io.flutter.app" $HOME/.pub-cache 2>/dev/null || true
+          grep -R --line-number "GeneratedPluginRegistrant" $HOME/.pub-cache 2>/dev/null || true
+
       - name: Build debug APK
         run: cd waowo_shop && flutter build apk --debug --no-tree-shake-icons
 
