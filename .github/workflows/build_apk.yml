@@ -29,25 +29,25 @@ jobs:
           echo "/opt/flutter/bin/cache/dart-sdk/bin" >> $GITHUB_PATH
 
       - name: Install dependencies
-        run: flutter pub get
+        run: cd waowo_shop && flutter pub get
 
       - name: Build debug APK
-        run: flutter build apk --debug --no-tree-shake-icons
+        run: cd waowo_shop && flutter build apk --debug --no-tree-shake-icons
 
       - name: Upload debug APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-debug-apk
-          path: build/app/outputs/flutter-apk/app-debug.apk
+          path: waowo_shop/build/app/outputs/flutter-apk/app-debug.apk
 
       - name: Try build release APK (may require signing)
         run: |
           set -e
-          flutter build apk --release || echo "release build failed or unsigned; see docs"
+          cd waowo_shop && flutter build apk --release || echo "release build failed or unsigned; see docs"
 
       - name: Upload release APK artifact (if present)
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: app-release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: waowo_shop/build/app/outputs/flutter-apk/app-release.apk
